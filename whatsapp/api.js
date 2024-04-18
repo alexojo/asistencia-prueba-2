@@ -6,9 +6,15 @@ const qrcode = require('qrcode-terminal');
 const createSession = async(req) => {
 
     const client = new Client({
-        authStrategy: new LocalAuth({
-            dataPath: "sessions",
-        }),
+        restartOnAuthFail: true,
+        puppeteer: {
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-dev-shm-usage',
+            ],
+        },
+        authStrategy: new LocalAuth(),
         webVersionCache: {
             type: 'remote',
             remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
